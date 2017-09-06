@@ -11,6 +11,7 @@
     "watch": "nodemon --watch . --exec truffle test"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
     "minimetoken": "^0.1.7",
     "zeppelin-solidity": "^1.2.0"
   },
