@@ -15,7 +15,7 @@ async function performMigration(deployer, network) {
     [
       '0xBa3e7453323e84A352892c7219Fe8C16FceB7Dd1', // Roderik
       '0xe4Dc3D3586dA28b76A23e675b8E6B4c56a5b9FF1', // Matthew
-      '0x52b8398551bb1d0bdc022355897508f658ad42f0', // Jonathan
+      '0x8A69583573b4F6a3Fd70b938DaFB0f61F3536692', // Jonathan
     ],
     2
   );
