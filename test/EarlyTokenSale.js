@@ -7,6 +7,7 @@ import { assertOpcode } from './helpers/assertOpcode';
 import { blocktravel } from './helpers/timetravel';
 
 const MiniMeTokenFactory = artifacts.require('MiniMeTokenFactory');
+const MiniMeToken = artifacts.require('MiniMeToken');
 const EarlyTokenSale = artifacts.require('EarlyTokenSale');
 const MultiSigWallet = artifacts.require('MultiSigWallet');
 const DataBrokerDaoToken = artifacts.require('DataBrokerDaoToken');
@@ -123,5 +124,69 @@ contract('EarlyTokenSale', function(accounts) {
       balance0.toNumber(),
       56250000000000000000000000 + 22500000000000000000000000
     );
+  });
+
+  it('should fail when trying to send ether when the sale is pauzed', async function() {
+    const { sale, token, wallet } = await getSaleDuringSale(accounts);
+    await sale.pauseContribution();
+    try {
+      web3.eth.sendTransaction({
+        from: accounts[0],
+        to: sale.address,
+        value: web3.toWei(1, 'ether'),
+        gas: 200000,
+      });
+    } catch (error) {
+      assertOpcode(error);
+    }
+    const totalSupply = await token.totalSupply();
+    assert.equal(totalSupply.toNumber(), 0);
+    const totalCollected = await sale.totalCollected();
+    assert.equal(totalCollected.toNumber(), 0);
+    const balance0 = await token.balanceOf(accounts[0]);
+    assert.equal(balance0.toNumber(), 0);
+    const walletBalance = web3.eth.getBalance(wallet.address);
+    assert.equal(walletBalance.toNumber(), 0);
+  });
+
+  it('should work when trying to send ether when the sale is unpauzed', async function() {
+    const { sale, token, wallet } = await getSaleDuringSale(accounts);
+    await sale.pauseContribution();
+    await sale.resumeContribution();
+    web3.eth.sendTransaction({
+      from: accounts[0],
+      to: sale.address,
+      value: web3.toWei(1, 'ether'),
+      gas: 300000,
+    });
+    const totalSupply = await token.totalSupply();
+    assert.equal(totalSupply.toNumber(), web3.toWei(1200, 'ether'));
+    const totalCollected = await sale.totalCollected();
+    assert.equal(totalCollected.toNumber(), web3.toWei(1, 'ether'));
+    const balance0 = await token.balanceOf(accounts[0]);
+    assert.equal(balance0.toNumber(), web3.toWei(1200, 'ether'));
+    const walletBalance = web3.eth.getBalance(wallet.address);
+    assert.equal(walletBalance.toNumber(), web3.toWei(1, 'ether'));
+  });
+
+  it('should be able to get mistakenly sent ether', async function() {
+    const { sale, token, wallet } = await getSaleDuringSale(accounts);
+    await sale.claimTokens(0);
+  });
+
+  it('should be able to get mistakenly sent tokens', async function() {
+    const { sale, token, wallet } = await getSaleDuringSale(accounts);
+    const newFactory = await MiniMeTokenFactory.new();
+    const newToken = await MiniMeToken.new(
+      newFactory.address,
+      0x0,
+      0,
+      'Some Token',
+      18,
+      'SOME',
+      true
+    );
+
+    await sale.claimTokens(newToken.address);
   });
 });
