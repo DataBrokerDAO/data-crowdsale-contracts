@@ -12,7 +12,7 @@ contract DataBrokerDaoToken is MiniMeToken {
       "DataBroker DAO Token", // Token name
       18,                     // Decimals
       "DATA",                 // Symbol
-      false                   // Enable transfers
+      true                   // Enable transfers
       ) 
       {}
 
