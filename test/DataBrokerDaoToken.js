@@ -1,5 +1,6 @@
 import { assertOpcode } from './helpers/assertOpcode';
 import { sharedSetup } from './helpers/setup';
+
 const EarlyTokenSale = artifacts.require('EarlyTokenSale');
 
 // testrpc -m "melt object asset crash now another usual cup pool during mad powder"\

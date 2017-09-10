@@ -4,6 +4,7 @@ import {
   getSaleDuringSale,
 } from './helpers/setup';
 import { assertOpcode } from './helpers/assertOpcode';
+import { blocktravel } from './helpers/timetravel';
 
 const MiniMeTokenFactory = artifacts.require('MiniMeTokenFactory');
 const EarlyTokenSale = artifacts.require('EarlyTokenSale');
@@ -45,6 +46,8 @@ const DataBrokerDaoToken = artifacts.require('DataBrokerDaoToken');
 // Base HD Path:  m/44'/60'/0'/0/{account_index}
 
 contract('EarlyTokenSale', function(accounts) {
+  blocktravel(100, accounts);
+
   it('should fail when trying to send ether before the sale', async function() {
     const { sale, token, wallet } = await getSaleBeforeSale(accounts);
     try {

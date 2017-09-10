@@ -14,3 +14,13 @@ export const timetravel = s => {
     );
   });
 };
+
+export const blocktravel = async (s, accounts) => {
+  for (let i = 0; i < s; i++) {
+    await web3.eth.sendTransaction({
+      from: accounts[0],
+      to: accounts[1],
+      value: 1,
+    });
+  }
+};
