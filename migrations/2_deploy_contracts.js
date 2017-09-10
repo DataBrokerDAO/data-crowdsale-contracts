@@ -49,14 +49,6 @@ async function performMigration(deployer, network) {
   const DeployedDataBrokerDaoToken = await DataBrokerDaoToken.deployed();
   DeployedDataBrokerDaoToken.changeController(EarlyTokenSale.address);
 
-  const sendTransaction = Promise.promisify(web3.eth.sendTransaction);
-
-  await sendTransaction({
-    from: accounts[0],
-    to: sale.address,
-    value: web3.toWei(0.1, 'ether'),
-    gas: 200000,
-  });
 }
 
 module.exports = function(deployer, network) {
