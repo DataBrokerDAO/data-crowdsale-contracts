@@ -1,5 +1,6 @@
 import { assertOpcode } from './helpers/assertOpcode';
 import { sharedSetup } from './helpers/setup';
+const EarlyTokenSale = artifacts.require('EarlyTokenSale');
 
 // testrpc -m "melt object asset crash now another usual cup pool during mad powder"\
 //
@@ -50,8 +51,16 @@ contract('DataBrokerDaoToken', function(accounts) {
   });
 
   it('should fail when trying to transfer', async function() {
-    const { token } = await sharedSetup(accounts);
-    await token.generateTokens(accounts[1], web3.toWei('100'));
+    const { factory, wallet, token } = await sharedSetup(accounts);
+    await token.generateTokens(accounts[0], web3.toWei('100'));
+    const { timestamp } = web3.eth.getBlock('latest');
+    const sale = await EarlyTokenSale.new(
+      timestamp - 3600,
+      timestamp + 3600,
+      wallet.address,
+      token.address
+    );
+    await token.changeController(sale.address);
     try {
       await token.transfer(accounts[2], web3.toWei('10'));
     } catch (error) {

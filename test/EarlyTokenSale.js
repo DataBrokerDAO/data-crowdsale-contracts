@@ -73,7 +73,7 @@ contract('EarlyTokenSale', function(accounts) {
       from: accounts[0],
       to: sale.address,
       value: web3.toWei(1, 'ether'),
-      gas: 200000,
+      gas: 300000,
     });
     const totalSupply = await token.totalSupply();
     assert.equal(totalSupply.toNumber(), web3.toWei(1200, 'ether'));
