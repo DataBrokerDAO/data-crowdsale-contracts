@@ -22,8 +22,8 @@ The code is thoroughly tested and can be reviewed at https://travis-ci.org/DataB
 
 ## 6. Join the conversation
 
-Learn more about DataBroker DAO at — https://databrokerdao.com 
-Join Slack channel at — https://slack.databrokerdao.com/ 
-Join DataBroker DAO Telegram channel at — https://t.me/databrokerdao 
-Find DataBroker DAO on Facebook at — https://www.facebook.com/DataBrokerDAO/ 
-Follow DataBroker DAO on Twitter at — https://twitter.com/DataBrokerDAO
+* Learn more about DataBroker DAO at  —  https://databrokerdao.com 
+* Join Slack channel at  —  https://slack.databrokerdao.com/ 
+* Join DataBroker DAO Telegram channel at  —  https://t.me/databrokerdao 
+* Find DataBroker DAO on Facebook at  —  https://www.facebook.com/DataBrokerDAO/ 
+* Follow DataBroker DAO on Twitter at  —  https://twitter.com/DataBrokerDAO
