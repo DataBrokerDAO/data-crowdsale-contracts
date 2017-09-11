@@ -5,6 +5,7 @@ module.exports = {
     'SafeMath.sol',
     'MultiSigWallet.sol',
     'MiniMeToken.sol',
+    'mocks/FailingMockToken.sol',
   ],
   copyNodeModules: true,
 };

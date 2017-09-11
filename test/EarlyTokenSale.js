@@ -11,6 +11,7 @@ const MiniMeToken = artifacts.require('MiniMeToken');
 const EarlyTokenSale = artifacts.require('EarlyTokenSale');
 const MultiSigWallet = artifacts.require('MultiSigWallet');
 const DataBrokerDaoToken = artifacts.require('DataBrokerDaoToken');
+const FailingMockToken = artifacts.require('FailingMockToken');
 
 // testrpc -m "melt object asset crash now another usual cup pool during mad powder"\
 //
@@ -188,5 +189,44 @@ contract('EarlyTokenSale', function(accounts) {
     );
 
     await sale.claimTokens(newToken.address);
+  });
+
+  it('should fail when the token generation fails', async function() {
+    const factory = await MiniMeTokenFactory.new();
+    const wallet = await MultiSigWallet.new(
+      [
+        accounts[7], // account_index: 7
+        accounts[8], // account_index: 8
+        accounts[9], // account_index: 9
+      ],
+      2
+    );
+    const token = await FailingMockToken.new(factory.address);
+    const { timestamp } = web3.eth.getBlock('latest');
+    const sale = await EarlyTokenSale.new(
+      timestamp - 3600,
+      timestamp + 3600,
+      wallet.address,
+      token.address
+    );
+    await token.changeController(sale.address);
+    try {
+      web3.eth.sendTransaction({
+        from: accounts[0],
+        to: sale.address,
+        value: web3.toWei(1, 'ether'),
+        gas: 300000,
+      });
+    } catch (error) {
+      assertOpcode(error);
+    }
+    const totalSupply = await token.totalSupply();
+    assert.equal(totalSupply.toNumber(), 0);
+    const totalCollected = await sale.totalCollected();
+    assert.equal(totalCollected.toNumber(), 0);
+    const balance0 = await token.balanceOf(accounts[0]);
+    assert.equal(balance0.toNumber(), 0);
+    const walletBalance = web3.eth.getBalance(wallet.address);
+    assert.equal(walletBalance.toNumber(), 0);
   });
 });
