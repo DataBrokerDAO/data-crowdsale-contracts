@@ -14,7 +14,7 @@ async function performMigration(deployer, network) {
     MultiSigWallet,
     [
       '0xBa3e7453323e84A352892c7219Fe8C16FceB7Dd1', // Roderik
-      '0xe4Dc3D3586dA28b76A23e675b8E6B4c56a5b9FF1', // Matthew
+      '0x16D0af500dbEA4F7c934ee97eD8EBF190d648de1', // Matthew
       '0x8A69583573b4F6a3Fd70b938DaFB0f61F3536692', // Jonathan
     ],
     2
@@ -48,7 +48,6 @@ async function performMigration(deployer, network) {
   // Set the controller of the token to the early token sale
   const DeployedDataBrokerDaoToken = await DataBrokerDaoToken.deployed();
   DeployedDataBrokerDaoToken.changeController(EarlyTokenSale.address);
-
 }
 
 module.exports = function(deployer, network) {
