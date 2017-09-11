@@ -78,7 +78,10 @@ contract EarlyTokenSale is TokenController, Controlled {
     /// @param _amount The amount of the transfer
     /// @return False if the controller does not authorize the transfer
     function onTransfer(address _from, address _to, uint _amount) returns(bool success) {
-        return true;
+        if ( _from == vaultAddress ) {
+            return true;
+        }
+        return false;
     }
 
     /// @notice Notifies the controller about an approval, for this EarlyTokenSale all
@@ -88,7 +91,10 @@ contract EarlyTokenSale is TokenController, Controlled {
     /// @param _amount The amount in the `approve()` call
     /// @return False if the controller does not authorize the approval
     function onApprove(address _owner, address _spender, uint _amount) returns(bool success) {
-        return true;
+        if ( _owner == vaultAddress ) {
+            return true;
+        }
+        return false;
     }
 
     /// @dev `doPayment()` is an internal function that sends the ether that this
