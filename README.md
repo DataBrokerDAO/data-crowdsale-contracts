@@ -14,6 +14,7 @@ We have focussed a lot on the safety of the token and the sale. By building on t
 On the regulatory front, especially with the shifting tides globally, we are striving to become the first fully compliant sale in the world. To do this, we are partnering with IdentityMind and their new token sale KYC/AML product. All token sale contributors are reviewed by a state of the art risk-based KYC (Know Your Customer) product to make certain they are coming from an acceptable country, they are not obfuscating their IP address, they aren’t a known bad actors, and that they are not on any government’s list of sanctioned individuals. Also they prevent contributors from creating more than one account, ensuring they undergo the proper KYC requirements and cannot use the token sale as a way to launder money. The regulation around token sales is still being formed in most countries. However, individual countries have already specified what’s required. When this occurs, IdentityMind ensures that all contributors are screened per the requirements of that country.
 
 ## 4. Concluding the early token sale
+
 After the early token sale ends, either by selling the maximum amount of tokens assigned (15%) or if the four week period has passed a finalisation function will be called. This will mint the platform and team allocations as described in the white paper. In the period immediately after the sale concludes, the final referrals will be calculated and paid out from the platforms wallet.
 
 ## 5. Testing
